@@ -25,19 +25,19 @@ Route::get('/acordeon', function () {
     return view('acordeon');
 });
 
-Auth::routes();
+#Auth::routes();
 
 
-Route::get('/tablas', function (){
-    $array1 = ['050500__.pdf' , 'Fecha' => 'February 28 2018 17:46:21', 'Tamanio' => '0.28 MB'];
-    $array2 = ['050513__Rev02.pdf' , 'Fecha' => 'February 28 2018 17:46:51', 'Tamanio' => '0.28 MB'];
-    $array3 = ['050800__pdf.Rev0.pdf' , 'Fecha' => 'February 28 2018 17:47:21', 'Tamanio' => '0.28 MB'];
-    $array4 = ['051200__.pdf' , 'Fecha' => 'February 28 2018 17:48:21', 'Tamanio' => '0.28 MB'];
+Route::get('/tabla', function (){
+    $array1 = ['Nombre' => '050500__.pdf' , 'Fecha' => 'February 28 2018 17:46:21', 'Tamanio' => '0.28 MB'];
+    $array2 = ['Nombre' => '050513__Rev02.pdf' , 'Fecha' => 'February 28 2018 17:46:51', 'Tamanio' => '0.28 MB'];
+    $array3 = ['Nombre' => '050800__pdf.Rev0.pdf' , 'Fecha' => 'February 28 2018 17:47:21', 'Tamanio' => '0.28 MB'];
+    $array4 = ['Nombre' => '051200__.pdf' , 'Fecha' => 'February 28 2018 17:48:21', 'Tamanio' => '0.28 MB'];
 
-    $filas = [$array1];
-    $filas = [$array2];
-    $filas = [$array3];
-    $filas = [$array4];
+    $filas[] = $array1;
+    $filas[] = $array2;
+    $filas[] = $array3;
+    $filas[] = $array4;
 
     $filas = json_decode(json_encode($filas));
 
