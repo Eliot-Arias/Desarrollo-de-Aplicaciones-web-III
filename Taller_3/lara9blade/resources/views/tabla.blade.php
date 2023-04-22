@@ -1,5 +1,7 @@
 @extends('layouts.vistapadre')
+
 @section('contenidoPrincipal')
+<h2>Contenido de la vista 2</h2>
     <div class="table-responsive">
         <table class="table table-striped
         table-hover	
@@ -9,26 +11,20 @@
             <thead class="table-light">
                 <caption>Table Name</caption>
                 <tr>
-                    <th>Column 1</th>
-                    <th>Column 2</th>
-                    <th>Column 3</th>
+                    <th>Nombre</th>
+                    <th>Fecha</th>
+                    <th>Tamaño</th>
                 </tr>
-                </thead>
-                <tbody class="table-group-divider">
-                    <tr class="table-primary" >
-                        <td scope="row">Item</td>
-                        <td>Item</td>
-                        <td>Item</td>
+            </thead>
+            <tbody>
+                @foreach ($filas as $fila)
+                    <tr>
+                        <td>{{ $fila->Nombre }}</td>
+                        <td>{{ $fila->Fecha }}</td>
+                        <td>{{ $fila->Tamanio }}</td>
                     </tr>
-                    <tr class="table-primary">
-                        <td scope="row">Item</td>
-                        <td>Item</td>
-                        <td>Item</td>
-                    </tr>
-                </tbody>
-                <tfoot>
-                    
-                </tfoot>
+                @endforeach
+            </tbody>
         </table>
     </div>
     

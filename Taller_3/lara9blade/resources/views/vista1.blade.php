@@ -10,7 +10,9 @@
             <p class="card-text">Text</p>
         </div>
         <div class="card-footer text-muted">
-            Footer
+            <button type="button" class="btn btn-primary btn-sm btn-block">
+                Block level button</button>
+            
         </div>
     </div>
 @endsection
