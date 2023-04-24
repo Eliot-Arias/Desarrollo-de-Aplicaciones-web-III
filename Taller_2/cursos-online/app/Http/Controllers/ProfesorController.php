@@ -22,7 +22,7 @@ class ProfesorController extends Controller
      */
     public function create()
     {
-        //
+        return view('profesores.create');
     }
 
     /**
@@ -30,7 +30,15 @@ class ProfesorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
+        $request->validate([
+            'nombre_apellido' => 'required | max:75',
+            'profesion' => 'required | max:35'
+        ]);
+
+        $profesor = new Profesor($request->all());
+        $profesor->save();
+        return redirect()->action([ProfesorController::class, 'index']);
     }
 
     /**
@@ -46,7 +54,8 @@ class ProfesorController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $profesor = Profesor::findOrFail($id);
+        return view('profesores.edit', ['profesor' => $profesor]);
     }
 
     /**
@@ -54,7 +63,13 @@ class ProfesorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $profesor = Profesor::findOrFail($id);
+        $profesor->nombre_apellido = $request->nombre_apellido;
+        $profesor->profesion = $request->profesion;
+        $profesor->grado_academico = $request->grad_academico;
+        $profesor->telefono = $request->telefono;
+        $profesor->save();
+        return redirect()->action([ProfesorController::class, 'index']);
     }
 
     /**

@@ -14,7 +14,7 @@ class AlumnoController extends Controller
     public function index()
     {
         $alumnos = Alumno::all();
-        return view('alumno.index', ['alumnos' => $alumnos]);
+        return view('alumnos.index', ['alumnos' => $alumnos]);
     }
 
     /**
@@ -22,7 +22,7 @@ class AlumnoController extends Controller
      */
     public function create()
     {
-        //
+        return view('alumnos.create');
     }
 
     /**
@@ -30,7 +30,19 @@ class AlumnoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre_apellido' => 'required | max:75',
+            'edad' => 'required | integer',
+        ],[
+            'nombre_apellido.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'nombre_apellido.max' => 'Este campo solo acepta hasta un maximo de 75 caracteres, ademas no creo que tengas un nombre tan largo, pndj',
+            'edad.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'edad.integer' => 'Es obvio que este campo requier un numero entero, piensa pws'
+        ]);
+
+        $alumnos = new Alumno($request->all());
+        $alumnos->save();
+        return redirect()->action([AlumnoController::class, 'index']);
     }
 
     /**
@@ -46,7 +58,8 @@ class AlumnoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $alumno = Alumno::findOrFail($id);
+        return view('alumnos.edit', ['alumno' => $alumno]);
     }
 
     /**
@@ -54,7 +67,13 @@ class AlumnoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $alumno = Alumno::findOrFail($id);
+        $alumno->nombre_apellido = $request->nombre_apellido;
+        $alumno->edad = $request->edad;
+        $alumno->telefono = $request->telefono;
+        $alumno->direccion = $request->direccion;
+        $alumno->save();
+        return redirect()->action([AlumnoController::class, 'index']);
     }
 
     /**
@@ -62,6 +81,7 @@ class AlumnoController extends Controller
      */
     public function destroy(string $id)
     {
+        
         //
     }
 }
