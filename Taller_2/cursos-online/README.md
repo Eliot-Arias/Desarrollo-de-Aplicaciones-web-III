@@ -6,14 +6,12 @@ ademas de crear la base de datos y despues correr estos codigos:
 - php artisan db:seed
 - instalar laravel/ui con <code> composer require laravel/ui </code>
 - intalar boobtrap --auth <code> php artisan ui bootstrap --auth  </code>
-- en caso de ser nesesario editar el archivo vite.config 
-<code>
+- en caso de ser nesesario editar el archivo vite.config <code>
     resolve : {
         alias : {
             '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap')
         }
-    }
-</code>
+    }</code>
 - instalar npm <code>npm install</code>
 - correr el codigo <code> npm run build </code>
 - correr el codigo <code> npm run dev </code>
