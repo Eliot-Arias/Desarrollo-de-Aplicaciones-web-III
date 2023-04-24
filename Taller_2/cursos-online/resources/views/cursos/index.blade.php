@@ -58,8 +58,8 @@
                                     href="{{ route('cursos.edit', $curso->id) }}" role="button">Editar</a>
                             </td>
                             <td> 
-                                <a name="" id="" class="btn btn-sm btn-light btn-outline-danger"
-                                    href="" role="button">Eliminar</a>
+                                <a name="" id="" class="btn btn-sm btn-light btn-outline-success"
+                                    href=" {{ route('cursos.show', $curso->id) }} " role="button">Ver</a>
                             </td>
                         </tr>
                     @endforeach

@@ -63,8 +63,8 @@ class CursoController extends Controller
             'nombre.max' => 'Este campo solo acepta hasta un maximo de 75 caracteres, ademas no creo que exista un curso con un nombre tan largo, pndj',
             'nivel.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
             'nivel.max' => 'Este campo solo acepta hasta un maximo de 35 caracteres, ademas no creo que exista un nivel con un nombre tan largo, pndj',
-            'edad.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
-            'edad.integer' => 'Es obvio que este campo requier un numero entero, piensa pws'
+            'profesor_id.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'alumno_ids.required' => 'Este campo NO puede estar sin seleccionar !!!!!',
         ]);
 
         $curso = new Curso($request->all());
@@ -80,7 +80,14 @@ class CursoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $curso = Curso::with(['profesor'])->where('cursos.id', '=', $id)->first();
+        $alumno_curso = DB::table('alumno_curso')->select('alumnos.nombre_apellido')->join(
+            'alumnos',
+            'alumnos.id',
+            '=',
+            'alumno_curso.alumno_id'
+        )->where('curso_id', '=', $id)->get();
+        return view('cursos.show', ['curso' => $curso, 'alumno_curso' => $alumno_curso]); 
     }
 
     /**
@@ -100,6 +107,21 @@ class CursoController extends Controller
      */
     public function update(Request $request, string $id)
     {
+
+        $request->validate([
+            'nombre' => 'required | max:75',
+            'nivel' => 'required | max:35',
+            'profesor_id' => 'required',
+            'alumno_ids' => 'required | array'
+        ], [
+            'nombre.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'nombre.max' => 'Este campo solo acepta hasta un maximo de 75 caracteres, ademas no creo que exista un curso con un nombre tan largo, pndj',
+            'nivel.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'nivel.max' => 'Este campo solo acepta hasta un maximo de 35 caracteres, ademas no creo que exista un nivel con un nombre tan largo, pndj',
+            'profesor_id.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'alumno_ids.required' => 'Este campo NO puede estar sin seleccionar !!!!!',
+        ]);
+
         $curso = Curso::findOrFail($id);
         $curso->nombre = $request->nombre;
         $curso->nivel = $request->nivel;
@@ -118,6 +140,9 @@ class CursoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $curso = Curso::findOrFail($id);
+        $curso->alumnos()->detach();
+        $curso->delete();
+        return redirect()->action([CursoController::class, 'index']);
     }
 }

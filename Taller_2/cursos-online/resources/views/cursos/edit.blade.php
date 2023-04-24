@@ -27,16 +27,24 @@
                             <div class="mb-3 row">
                                 <label for="nombre" class="col-sm-4 col-form-label">Nombre Curso</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="nombre" id="nombre"
-                                        placeholder="nombre" value="{{ $curso->nombre }}">
+                                    <input type="text" class="form-control @error('nombre') is-invalid @enderror"
+                                        name="nombre" id="nombre" placeholder="nombre"
+                                        value="{{ old('nombre', $curso->nombre) }}">
+                                    @error('nombre')
+                                        <span id="nombre" class="invalid-feedback"> {{ $message }} </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3
                                         row">
                                 <label for="nivel" class="col-sm-4 col-form-label">Nivel</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="nivel" id="nivel"
-                                        placeholder="nivel" value="{{ $curso->nivel }}"">
+                                    <input type="text" class="form-control @error('nivel') is-invalid @enderror"
+                                        name="nivel" id="nivel" placeholder="nivel"
+                                        value="{{ old('nivel', $curso->nivel) }}">
+                                    @error('nivel')
+                                        <span id="nivel" class="invalid-feedback"> {{ $message }} </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3
@@ -46,35 +54,37 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="horas_academicas"
                                         id="horas_academicas" placeholder="Horas"
-                                        value="{{ $curso->horas_academicas }}">
+                                        value="{{ old('horas_academicas', $curso->horas_academicas) }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="profesor_id" class="col-sm-4 col-form-label">Profesor</label>
                                 <div class="col-sm-8">
-                                    <select class="form-select form-select-md" name="profesor_id" id="profesor_id">
+                                    <select
+                                        class="form-select form-select-md @error('profesor_id') is-invalid @enderror"
+                                        name="profesor_id" id="profesor_id">
                                         <option selected disabled>--Seleccione un Profesor--</option>
                                         @foreach ($profesores as $profesor)
-                                            @if ($profesor->id == $curso->profesor_id)
-                                                <option value="{{ $profesor->id }}" selected>
-                                                    {{ $profesor->nombre_apellido }}</option>
-                                            @else
-                                                <option value="{{ $profesor->id }}">
-                                                    {{ $profesor->nombre_apellido }}</option>
-                                            @endif
+                                            <option value=" {{ $profesor->id }}"
+                                                {{ old('profesor_id', $curso->profesor_id) == $profesor->id ? 'selected' : '' }}>
+                                                {{ $profesor->nombre_apellido }}</option>
                                         @endforeach
                                     </select>
+                                    @error('profesor_id')
+                                        <span id="profesor_id" class="invalid-feedback"> {{ $message }} </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="alumno_ids" class="col-sm-4 col-form-label">Alumnos</label>
                                 <div class="col-sm-8">
-                                    <select multiple class="form-select form-select-md" name="alumno_ids[]"
-                                        id="alumno_ids">
+                                    <select multiple
+                                        class="form-select form-select-md @error('alumno_ids') is-invalid @enderror"
+                                        name="alumno_ids[]" id="alumno_ids">
                                         @foreach ($alumnos as $alumno)
                                             @php $valor = 0; @endphp
                                             @foreach ($alumno_curso as $alumno_curso_valor)
-                                                @if ($alumno->id == $alumno_curso_valor->alumno_id)
+                                                @if (old('alumno_ids.0', $alumno->id) == $alumno_curso_valor->alumno_id)
                                                     @php $valor = 1; @endphp
                                                 @endif
                                             @endforeach
@@ -87,6 +97,9 @@
                                             @endif
                                         @endforeach
                                     </select>
+                                    @error('alumno_ids')
+                                        <span id="alumno_ids" class="invalid-feedback"> {{ $message }} </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">

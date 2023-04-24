@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Alumno;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class AlumnoController extends Controller
 {
@@ -33,7 +34,7 @@ class AlumnoController extends Controller
         $request->validate([
             'nombre_apellido' => 'required | max:75',
             'edad' => 'required | integer',
-        ],[
+        ], [
             'nombre_apellido.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
             'nombre_apellido.max' => 'Este campo solo acepta hasta un maximo de 75 caracteres, ademas no creo que tengas un nombre tan largo, pndj',
             'edad.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
@@ -50,7 +51,8 @@ class AlumnoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $alumno = Alumno::findOrFail($id);
+        return view('alumnos.show', ['alumno' => $alumno]);
     }
 
     /**
@@ -67,6 +69,16 @@ class AlumnoController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $request->validate([
+            'nombre_apellido' => 'required | max:75',
+            'edad' => 'required | integer',
+        ], [
+            'nombre_apellido.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'nombre_apellido.max' => 'Este campo solo acepta hasta un maximo de 75 caracteres, ademas no creo que tengas un nombre tan largo, pndj',
+            'edad.required' => 'Este campo NO puede estar vacio, no seas gil, llenalo !!!!!',
+            'edad.integer' => 'Es obvio que este campo requier un numero entero, piensa pws'
+        ]);
+
         $alumno = Alumno::findOrFail($id);
         $alumno->nombre_apellido = $request->nombre_apellido;
         $alumno->edad = $request->edad;
@@ -81,7 +93,12 @@ class AlumnoController extends Controller
      */
     public function destroy(string $id)
     {
-        
-        //
+        if (DB::table('alumno_curso')->where('alumno_id', '=', $id)->first() != null) {
+            return redirect()->back()->withErrors(['mensaje' => 'El alumno no puede ser eliminado.']);
+        } else {
+            $alumno = Alumno::findOrFail($id);
+            $alumno->delete();
+            return redirect()->action([AlumnoController::class, 'index']);
+        }
     }
 }

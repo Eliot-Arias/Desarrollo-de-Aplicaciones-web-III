@@ -27,30 +27,40 @@
                             <div class="mb-3 row">
                                 <label for="nombre_apellido" class="col-sm-4 col-form-label">Nombres y Apellidos</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="nombre_apellido"
-                                        id="nombre_apellido" placeholder="Nombres y Apellidos"
-                                        value="{{ $alumno->nombre_apellido }}">
+                                    <input type="text"
+                                        class="form-control @error('nombre_apellido') is-invalid @enderror"
+                                        name="nombre_apellido" id="nombre_apellido" placeholder="Nombres y Apellidos"
+                                        value="{{ old('nombre_apellido', $alumno->nombre_apellido) }}">
+                                    @error('nombre_apellido')
+                                        <span id="nombre_apellido" class="invalid-feedback" role="alert">
+                                            {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="edad" class="col-sm-4 col-form-label">Edad</label>
                                 <div class="col-sm-8">
-                                    <input type="text" class="form-control" name="edad" id="edad"
-                                        placeholder="Edad" value="{{ $alumno->edad }}">
+                                    <input type="text" class="form-control @error('edad') is-invalid @enderror"
+                                        name="edad" id="edad" placeholder="Edad" value="{{ old('edad', $alumno->edad) }}">
+                                    @error('edad')
+                                        <span id="edad" class="invalid-feedback" role="alert"> {{ $message }}
+                                        </span>
+                                    @enderror
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="telefono" class="col-sm-4 col-form-label">Telefono</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="telefono" id="telefono"
-                                        placeholder="Telefono" value="{{ $alumno->telefono }}">
+                                        placeholder="Telefono" value="{{ old('telefono', $alumno->telefono) }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
                                 <label for="direccion" class="col-sm-4 col-form-label">Dirección</label>
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="direccion" id="direccion"
-                                        placeholder="Dirección" value="{{ $alumno->direccion }}">
+                                        placeholder="Dirección" value="{{ old('direccion', $alumno->direccion) }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
