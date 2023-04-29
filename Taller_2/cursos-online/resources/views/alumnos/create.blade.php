@@ -60,6 +60,14 @@
                                         placeholder="Dirección" value="{{old('direccion')}}">
                                 </div>
                             </div>
+                            
+                            <div class="mb-3 row">
+                                <label for="direccion" class="col-sm-4 col-form-label">Foto</label>
+                                <div class="col-sm-8">
+                                    <input type="file" class="form-control" name="" id="" placeholder="" aria-describedby="fileHelpId">
+                                </div>
+                            </div>
+
                             <div class="mb-3 row">
                                 <div class="col-sm-2"></div>
                                 <div class="col-sm-8">

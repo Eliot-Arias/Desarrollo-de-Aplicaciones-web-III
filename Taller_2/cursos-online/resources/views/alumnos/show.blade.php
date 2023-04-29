@@ -25,11 +25,15 @@
                     <p class="fs-5"><span class="fw-bold">Edad:</span> {{ $alumno->edad }}</p>
                     <p class="fs-5"><span class="fw-bold">Direccion:</span> {{ $alumno->direccion }}</p>
                     <p class="fs-5"><span class="fw-bold">Telefono:</span> {{ $alumno->telefono }}</p>
+                    @if (isset($alumno->foto))
+                        <p class="fs-5"><span class="fw-bold">Foto: </span></p>
+                        <img src="{{asset($alumno->foto)}}" width="200px" class="img-fluid" alt="image desc">
+                    @endif
                     @if ($errors->any())
                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
                             <button type="button" class="btn-close" data-bs-dismiss="alert"
                                 aria-label="Close"></button>
-                            <strong>{{$errors->first('mensaje')}}</strong> 
+                            <strong>{{ $errors->first('mensaje') }}</strong>
                         </div>
                         <script>
                             var alertList = document.querySelectorAll('.alert');
@@ -39,14 +43,17 @@
                         </script>
                         {{-- <p class="text-danger">{{$errors->first('mensaje')}}</p> --}}
                     @endif
+
                 </div>
                 <div class="card-footer text-muted">
                     <div class="d-flex justify-content-center gap-4">
-                        <a href="{{ route('alumnos.edit', $alumno->id) }}" class="btn btn-light btn-outline-primary">Editar</a> <br>
+                        <a href="{{ route('alumnos.edit', $alumno->id) }}"
+                            class="btn btn-light btn-outline-primary">Editar</a> <br>
                         <form action="{{ route('alumnos.destroy', $alumno->id) }}" method="POST">
                             @csrf
                             {{ method_field('DELETE') }}
-                            <input class="btn btn-light btn-outline-danger" type="submit" value="Eliminar" onclick="return EliminarRegistro('Eliminar Alumno')">
+                            <input class="btn btn-light btn-outline-danger" type="submit" value="Eliminar"
+                                onclick="return EliminarRegistro('Eliminar Alumno')">
                         </form>
                     </div>
                 </div>

@@ -41,8 +41,20 @@ class AlumnoController extends Controller
             'edad.integer' => 'Es obvio que este campo requier un numero entero, piensa pws'
         ]);
 
-        $alumnos = new Alumno($request->all());
-        $alumnos->save();
+
+        $alumno = new Alumno($request->all());
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $destinationPath = 'images/fotos/';
+            $filename = time() . '-' . $file->getClientOriginalName();
+            $uploadSuccess = $request->file('foto')->move($destinationPath, $filename);
+            $alumno->foto = $destinationPath . $filename;
+            dd($uploadSuccess);
+        } else {
+            $alumno->foto = null;
+        }
+
+        $alumno->save();
         return redirect()->action([AlumnoController::class, 'index']);
     }
 
@@ -80,6 +92,15 @@ class AlumnoController extends Controller
         ]);
 
         $alumno = Alumno::findOrFail($id);
+
+        if ($request->hasFile('foto')) {
+            $file = $request->file('foto');
+            $destinationPath = 'images/fotos/';
+            $filename = time() . '-' . $file->getClientOriginalName();
+            $uploadSuccess = $request->file('foto')->move($destinationPath, $filename);
+            $alumno->foto = $destinationPath . $filename;
+        }
+
         $alumno->nombre_apellido = $request->nombre_apellido;
         $alumno->edad = $request->edad;
         $alumno->telefono = $request->telefono;

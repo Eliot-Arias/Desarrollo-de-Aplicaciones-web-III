@@ -21,7 +21,7 @@
                             href=" {{ route('alumnos.index') }} " role="button">Ver Tabla</a>
                     </div>
                     <div class="card-body">
-                        <form action=" {{ route('alumnos.update', $alumno->id) }} " method="POST">
+                        <form action=" {{ route('alumnos.update', $alumno->id) }} " method="POST" enctype="multipart/form-data">
                             @csrf
                             {{ method_field('PUT') }}
                             <div class="mb-3 row">
@@ -61,6 +61,12 @@
                                 <div class="col-sm-8">
                                     <input type="text" class="form-control" name="direccion" id="direccion"
                                         placeholder="Dirección" value="{{ old('direccion', $alumno->direccion) }}">
+                                </div>
+                            </div>
+                            <div class="mb-3 row">
+                                <label for="direccion" class="col-sm-4 col-form-label">Foto</label>
+                                <div class="col-sm-8">
+                                    <input type="file" class="form-control" name="foto" id="" placeholder="" aria-describedby="fileHelpId"  value="{{ old('foto', $alumno->foto) }}">
                                 </div>
                             </div>
                             <div class="mb-3 row">
